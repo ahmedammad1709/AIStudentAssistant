@@ -43,17 +43,21 @@ public class Login extends javax.swing.JFrame {
 //        showSignupPage();
 //        showLoginPage();
 //        showEmailPage();
+//        showForgetPasswordPage();
         this.setVisible(true);
+
+//        UserDataHandler.displayUsers();
+//        UserDataHandler.deleteAllUsers();
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
     /**
      * @param args the command line arguments
@@ -73,17 +77,22 @@ public class Login extends javax.swing.JFrame {
         pageWrapper.add((new DashboardPage()).getMainPanel(), BorderLayout.CENTER);
         pageWrapper.revalidate();
         pageWrapper.repaint();
-//        this.setContentPane(new DashboardPage().getMainPanel());
-        
+
         this.revalidate();
         this.repaint();
     }
 
     private void showLoginPage() {
-        LoginPage loginPage = new LoginPage();
+
+        LoginPage[] loginPage = new LoginPage[1];
+
+        loginPage[0] = new LoginPage(
+                () -> SwingUtilities.invokeLater(() -> showForgetPasswordPage()),
+                () -> SwingUtilities.invokeLater(() -> showDashboardPage())
+        );
 
         pageWrapper.removeAll();
-        pageWrapper.add(loginPage.getMainPanel(), BorderLayout.CENTER);
+        pageWrapper.add(loginPage[0].getMainPanel(), BorderLayout.CENTER);
         pageWrapper.revalidate();
         pageWrapper.repaint();
 
@@ -107,10 +116,24 @@ public class Login extends javax.swing.JFrame {
 
     private void showEmailPage() {
         EmailVerificationPage emailverification = new EmailVerificationPage(() -> {
-            // This will be called ONLY if everything is valid
             SwingUtilities.invokeLater(() -> showLoginPage());
         });
-        this.setContentPane(emailverification.getMainPanel());
+        pageWrapper.removeAll();
+        pageWrapper.add(emailverification.getMainPanel(), BorderLayout.CENTER);
+        pageWrapper.revalidate();
+        pageWrapper.repaint();
+        this.revalidate();
+        this.repaint();
+    }
+
+    private void showForgetPasswordPage() {
+        ForgetPasswordPage forgetPassword = new ForgetPasswordPage(() -> {
+            SwingUtilities.invokeLater(() -> showLoginPage());
+        });
+        pageWrapper.removeAll();
+        pageWrapper.add(forgetPassword.getMainPanel(), BorderLayout.CENTER);
+        pageWrapper.revalidate();
+        pageWrapper.repaint();
         this.revalidate();
         this.repaint();
     }
@@ -136,6 +159,6 @@ public class Login extends javax.swing.JFrame {
 
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    // End of variables declaration//GEN-END:variables
+    // Variables declaration - do not modify                     
+    // End of variables declaration                   
 }
